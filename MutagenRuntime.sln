@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutagenRuntime", "MutagenRuntime\MutagenRuntime.csproj", "{90766C10-BE23-4D6E-A5D7-B55C1ADD6177}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutagenRuntime.Test", "MutagenRuntime.Test\MutagenRuntime.Test.csproj", "{DFFF94CD-183D-400A-8757-F43659A066F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90766C10-BE23-4D6E-A5D7-B55C1ADD6177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90766C10-BE23-4D6E-A5D7-B55C1ADD6177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90766C10-BE23-4D6E-A5D7-B55C1ADD6177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90766C10-BE23-4D6E-A5D7-B55C1ADD6177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFFF94CD-183D-400A-8757-F43659A066F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFFF94CD-183D-400A-8757-F43659A066F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFFF94CD-183D-400A-8757-F43659A066F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFFF94CD-183D-400A-8757-F43659A066F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
