@@ -1,8 +1,8 @@
 language: csharp
-solution: mutagen.sln
+solution: MutagenRuntime.sln
 install:
-  - nuget restore mutagen.sln
+  - nuget restore MutagenRuntime.sln
   - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
 script:
-  - xbuild /p:Configuration=Release mutagen.sln
-  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./MTest/bin/Release/MTest.dll
+  - xbuild /p:Configuration=Release MutagenRuntime.sln
+  - mono ./testrunner/xunit.runners.1.9.2/tools/xunit.console.clr4.exe ./MutagenRuntime.Test/bin/Release/MutagenRuntime.Test.dll
