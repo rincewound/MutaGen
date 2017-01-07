@@ -5,5 +5,5 @@ install:
   - sudo apt-get install nunit-console
 script:
   - xbuild /p:Configuration=Release MutagenRuntime.sln
-  after_script:
+after_script:
   - nunit-console  ./MutagenRuntime.Test/bin/Release/MutagenRuntime.Test.dll
