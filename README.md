@@ -1,6 +1,11 @@
 # MutaGen
 A Testsystem for permutation based testing
 
+Build: ![BuildState](https://travis-ci.org/rincewound/MutaGen.svg?branch=master)
+
+
+![Public Trello Board](https://trello.com/b/N6uAVONt/mutagen)
+
 ##Introduction
 The idea for MutaGen arose from the need to automatically test a wide range of configurations of a software that should exhibit similar behavior. After first investigating Fitnesse and Cucumber a couple of new concepts were developed to facilitate permutations in testcases.
 
@@ -16,11 +21,11 @@ Scenario --- Interpreted by ---> Frontend --- Invokes ---> Runtime --- Invokes -
 [<--------------Scheme----------------------------------->][<-- C# --------------->][Any .Net, user code]
 
 ##DSL
-The DSL I have in mind is closely related to what Cucumber does with Gherkin, however, when I did some prototyping, I noticed, that I was essentially using something that appears to be very closely related to Lisp. Given that the whole business with facettes is very much listprocessing I opted to create the very first frontend using IronScheme. As I do know, that Lisp has not all that much going for it these days (popularity wise!)
+The DSL I have in mind is closely related to what Cucumber does with Gherkin, however, when I did some prototyping, I noticed, that I was essentially using something that appears to be very closely related to Lisp. Given that the whole business with facettes is very much listprocessing I opted to create the very first frontend using IronScheme. As I do know, that Lisp has not all that much going for it these days (popularity wise!), I took the approach of seperating the frontend from the backend, thus giving the user the option to use another language to drive the backend.
 
 ##Current state
 As of now, I don't have a working version yet. Expect the first bits of code within
 Jan '17 and - hopefully - something buildable a couple of weeks later.
 
-*Jan '17: Moved to Github
-*Dec '16: Started implementation on runtime, experiments for scenarios
+* Jan '17: Moved to Github
+* Dec '16: Started implementation on runtime, experiments for scenarios

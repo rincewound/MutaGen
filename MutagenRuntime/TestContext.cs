@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace MutagenRuntime
 {
-    public class TestContext
+    public class TestContext : ITestContext
     {
-        internal struct ContextEntry
-        {
-            public string facetteName;
-            public int limitLow;
-            public int limitHigh;
-        }
+
 
         internal List<ContextEntry> entries = new List<ContextEntry>();
 
@@ -22,6 +17,9 @@ namespace MutagenRuntime
             entries.Add(new ContextEntry() { facetteName = facetteName, limitLow = limitLow, limitHigh = limitHigh });
         }
 
-
+        public List<ContextEntry> GetEntries()
+        {
+            return entries;
+        }
     }
 }

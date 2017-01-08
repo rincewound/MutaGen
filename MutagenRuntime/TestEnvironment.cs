@@ -12,7 +12,7 @@ namespace MutagenRuntime
         of all defined testcases. 
     */
 
-   public class TestEnvironment
+   public class TestEnvironment : ITestEnvironment
     {
         Dictionary<string, Facette> allFacettes = new Dictionary<string, Facette>();
 
@@ -51,7 +51,7 @@ namespace MutagenRuntime
             return allFacettes[facetteName];
         }
 
-        public List<Binding> CreateBindings(TestContext testContext)
+        public List<Binding> CreateBindings(ITestContext testContext)
         {
             var theValues = CollectFacetteValues(testContext);
             var theBindings = CreateBindingsImpl(theValues);
@@ -92,13 +92,13 @@ namespace MutagenRuntime
             return result;
         }
 
-        private List<Facette.SelectResult> CollectFacetteValues(TestContext testContext)
+        private List<Facette.SelectResult> CollectFacetteValues(ITestContext testContext)
         {
             List<Facette.SelectResult> facetteValues = new List<Facette.SelectResult>();
 
-            for (int i = 0; i < testContext.entries.Count; i++)
+            for (int i = 0; i < testContext.GetEntries().Count; i++)
             {
-                var entry = testContext.entries[i];
+                var entry = testContext.GetEntries()[i];
                 var fac = GetFacette(entry.facetteName);
                 var allValues = fac.GetValidCombinations(entry.limitLow, entry.limitHigh);
                 facetteValues.Add(allValues);

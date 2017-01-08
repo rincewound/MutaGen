@@ -3,6 +3,7 @@ using MutagenRuntime;
 using System.Collections.Generic;
 using MicroIOC;
 using NUnit.Framework;
+using FakeItEasy;
 
 namespace MTest
 {
@@ -41,15 +42,20 @@ namespace MTest
                 addCalled = true;
                 base.AddFacette(f);
             }
+
         }
 
         TestEnvDummy ted = new TestEnvDummy();
+        ITestEnvironment fakeTev = A.Fake<ITestEnvironment>();
 
         [SetUp]
         public void Init()
         {
             IOC.Reset();
-            IOC.Register<TestEnvironment>(() => { return ted; });
+            IOC.Register<ITestEnvironment>(() => {
+                ted = new TestEnvDummy();
+                return ted; });
+            IOC.Register<ITestContext>(() =>  new MutagenRuntime.TestContext());
             Api.Init();
         }
 
@@ -102,5 +108,140 @@ namespace MTest
 
             Assert.IsNotNull(Api.Testharness());
         }
+
+        [Ignore("Not testable this way")]
+        public void BeginTestCase_ClearsTestContext()
+        {
+            // Can we test this at all?
+            Assert.Fail("Implement");
+        }
+
+        [Test]
+        public void AddFacette_AddsFacetteToCurrentTestContext()
+        {
+            var theContext = A.Fake<ITestContext>();
+            IOC.Reset();
+            IOC.Register<ITestEnvironment>(() => fakeTev);
+            IOC.Register<ITestContext>(() => theContext);
+
+            var n = typeof(TestyHarness);
+            Api.CreateFacette("TestFac", new List<object>() { 1, 2, 3 });
+            Api.BeginTestCase(n.AssemblyQualifiedName, null);
+            Api.AddFacette("TestFac", 1, 2);
+
+            A.CallTo(() => theContext.AddFacette("TestFac",1, 2)).MustHaveHappened();
+        }
+
+        [Test]
+        public void AddFacette_Throws_IfNoTestCaseWasBegun()
+        {
+            var n = typeof(TestyHarness);
+            IOCSetup();
+
+            try
+            {
+                Api.CreateFacette("TestFac", new List<object>() { 1, 2, 3 });
+                Api.AddFacette("TestFac", 1, 1);
+                Assert.Fail("AddFacette did not throw, when no testcase was started.");
+            }
+            catch (NoTestCaseBegunException)
+            {
+
+            }
+
+        }
+
+        class TestyHarness: IAmAHarness
+        {
+            public static List<List<object>> valueSets = new List<List<object>>();
+            virtual public void ApplyTestFac(List<object> data)
+            {
+                valueSets.Add(data);
+            }
+        }
+
+        private void IOCSetup()
+        {
+            IOC.Reset();
+            IOC.Register<ITestEnvironment>(() => fakeTev);
+            IOC.Register<ITestContext>(() => new MutagenRuntime.TestContext());
+        }
+
+        [Test]
+        public void ExecTestCase_Throws_NoTestCaseException_IfNoAssertableIsAvailable()
+        {
+            IOCSetup();
+
+            try
+            {
+                Api.ExecTestCase();
+                Assert.Fail("Did not throw execption!");
+            }
+            catch (NoTestCaseException)
+            {
+                // All good!
+                return;
+            }
+        }
+
+        [Test]
+        public void ExecTestCase_Throws_NoTestCaseStartedException_IfNoTestCaseWasBegun()
+        {
+            var n = typeof(TestyHarness);
+            IOCSetup();
+
+            try
+            {
+                var coll = new AssertCollection();
+                coll.Push(() => true);
+                Api.CommitTestCaseCode(coll);
+                Api.ExecTestCase();
+                Assert.Fail("Did not throw execption!");
+            }
+            catch (NoTestCaseStartedException)
+            {
+                // All good!
+                return;
+            }
+        }
+
+
+        [Test]
+        public void ExecTestCase_AppliesBindings()
+        {
+            var n = typeof(TestyHarness);
+            IOCSetup();
+
+            Api.CreateFacette("TestFac", new List<object>() { 1, 2, 3 });
+            Api.BeginTestCase(n.AssemblyQualifiedName, null);
+            Api.AddFacette("TestFac", 1, 1);
+
+            var coll = new AssertCollection();
+            coll.Push(() => true);
+            Api.CommitTestCaseCode(coll);
+            Api.ExecTestCase();
+
+            Assert.AreEqual(3, TestyHarness.valueSets.Count);
+        }
+
+        [Test]
+        public void ExecTestCase_AppliesCorrectNumberOfBindings()
+        {
+            var n = typeof(TestyHarness);
+            TestyHarness.valueSets.Clear();
+            IOCSetup();
+
+            Api.CreateFacette("TestFac", new List<object>() { 1, 2, 3 });
+            Api.BeginTestCase(n.AssemblyQualifiedName, null);
+            Api.AddFacette("TestFac", 1, 2);
+
+            var coll = new AssertCollection();
+            coll.Push(() => true);
+            Api.CommitTestCaseCode(coll);
+            Api.ExecTestCase();
+
+            Assert.AreEqual(6, TestyHarness.valueSets.Count);
+        }
+
     }
 }
