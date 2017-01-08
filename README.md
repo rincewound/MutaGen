@@ -4,7 +4,7 @@ A Testsystem for permutation based testing
 Build: ![BuildState](https://travis-ci.org/rincewound/MutaGen.svg?branch=master)
 
 
-![Public Trello Board](https://trello.com/b/N6uAVONt/mutagen)
+[Public Trello Board](https://trello.com/b/N6uAVONt/mutagen)
 
 ##Introduction
 The idea for MutaGen arose from the need to automatically test a wide range of configurations of a software that should exhibit similar behavior. After first investigating Fitnesse and Cucumber a couple of new concepts were developed to facilitate permutations in testcases.
