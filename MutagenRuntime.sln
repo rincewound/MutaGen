@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutagenRuntime", "MutagenRu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutagenRuntime.Test", "MutagenRuntime.Test\MutagenRuntime.Test.csproj", "{DFFF94CD-183D-400A-8757-F43659A066F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mutagen.SchemeFrontend", "Mutagen.SchemeFrontend\Mutagen.SchemeFrontend.csproj", "{F3C3F4CB-50CD-4FDA-B8D9-6AE5E8F86D79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mutagen.SchemeFrontend.Test", "Mutagen.SchemeFrontend.Test\Mutagen.SchemeFrontend.Test.csproj", "{131A7030-E9E0-4751-8108-E4160FFFE809}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{DFFF94CD-183D-400A-8757-F43659A066F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFFF94CD-183D-400A-8757-F43659A066F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFFF94CD-183D-400A-8757-F43659A066F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3C3F4CB-50CD-4FDA-B8D9-6AE5E8F86D79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3C3F4CB-50CD-4FDA-B8D9-6AE5E8F86D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3C3F4CB-50CD-4FDA-B8D9-6AE5E8F86D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3C3F4CB-50CD-4FDA-B8D9-6AE5E8F86D79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{131A7030-E9E0-4751-8108-E4160FFFE809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{131A7030-E9E0-4751-8108-E4160FFFE809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{131A7030-E9E0-4751-8108-E4160FFFE809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{131A7030-E9E0-4751-8108-E4160FFFE809}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
