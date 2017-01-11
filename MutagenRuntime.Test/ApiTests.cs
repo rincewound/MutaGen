@@ -205,7 +205,6 @@ namespace MTest
             }
         }
 
-
         [Test]
         public void ExecTestCase_AppliesBindings()
         {
