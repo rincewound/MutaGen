@@ -7,4 +7,4 @@ script:
   - xbuild /p:Configuration=Release MutagenRuntime.sln
 after_script:
   - nunit-console  ./MutagenRuntime.Test/bin/Release/MutagenRuntime.Test.dll
-  - nunit-console  ./MutagenRuntime.LuaFrontEnd.Test/bin/Release/Mutagen.LuaFrontend.Test.dll
+  - nunit-console  ./Mutagen.LuaFrontEnd.Test/bin/Release/Mutagen.LuaFrontend.Test.dll
