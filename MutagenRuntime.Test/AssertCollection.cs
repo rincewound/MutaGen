@@ -5,7 +5,7 @@ using MutagenRuntime;
 using System.Linq;
 using NUnit.Framework;
 
-namespace MTest
+namespace MutagenTests
 {
     [TestFixture]
     public class AssertCollectionTests

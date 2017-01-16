@@ -7,7 +7,7 @@ using MicroIOC;
 namespace Mutagen.LuaFrontend.Test
 {
     [TestFixture]
-    public class UnitTest1
+    public class FrontEndApiTest
     {
         Lua lua;
         LuaGlobalPortable luaEnv;
@@ -27,7 +27,7 @@ namespace Mutagen.LuaFrontend.Test
 
         private void ReadScript(string path)
         {
-            var tc = NUnit.Framework.TestContext.CurrentContext.TestDirectory;
+            var tc = TestContext.CurrentContext.TestDirectory;
             var data = System.IO.File.ReadAllText(tc + path);
             scriptChunk = lua.CompileChunk(data, "scriptChunk", null);
         }

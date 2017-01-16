@@ -3,7 +3,7 @@ using MutagenRuntime;
 using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace MTest
+namespace MutagenTests
 {
     [TestFixture]
     public class TestEnvironmentTests
