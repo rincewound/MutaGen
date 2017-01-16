@@ -1,8 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
 using Neo.IronLua;
-using FakeItEasy;
 using MicroIOC;
+using Simple.Mocking;
 
 namespace Mutagen.LuaFrontend.Test
 {
@@ -20,7 +20,7 @@ namespace Mutagen.LuaFrontend.Test
             IOC.Reset();
             lua = new Lua();
             luaEnv = lua.CreateEnvironment();
-            apiBridge = A.Fake<IApiBridge>();
+            apiBridge = Mock.Interface<IApiBridge>();
             IOC.Register<IApiBridge>( () => apiBridge);
             IOC.Register<ApiAdapter>(() => new ApiAdapter());
         }
@@ -42,21 +42,23 @@ namespace Mutagen.LuaFrontend.Test
         [Test]
         public void CallTo_CreateFacette_CallsApi()
         {
+            Expect.MethodCall(() => apiBridge.CreateFacette("facName", Any<System.Collections.Generic.List<object>>.Value));
+
             ApiAdapter api = IOC.Resolve<ApiAdapter>();
             ReadScript("./LuaScripts/CreateFacette.lua");
             LuaUtil.PublishObjectMethods(api, luaEnv);
-            luaEnv.DoChunk(scriptChunk);
-            A.CallTo(() => apiBridge.CreateFacette("facName", A<System.Collections.Generic.List<object> >.Ignored)).MustHaveHappened();
+            luaEnv.DoChunk(scriptChunk);            
         }
 
         [Test]
         public void CallTo_AddFacette_CallsApi()
         {
+            Expect.MethodCall(() => apiBridge.AddFacette("fnord", 1, 7));
+
             ApiAdapter api = IOC.Resolve<ApiAdapter>();
             ReadScript("./LuaScripts/AddFacette.lua");
             LuaUtil.PublishObjectMethods(api, luaEnv);
-            luaEnv.DoChunk(scriptChunk);
-            A.CallTo(() => apiBridge.AddFacette("fnord", 1, 7)).MustHaveHappened();
+            luaEnv.DoChunk(scriptChunk);            
         }
     }
 }
