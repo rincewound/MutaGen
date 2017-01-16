@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MTest
+namespace MutagenTests
 {
     [TestFixture]
     public class FacetteTests

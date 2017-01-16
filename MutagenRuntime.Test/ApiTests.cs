@@ -5,7 +5,7 @@ using MicroIOC;
 using NUnit.Framework;
 using FakeItEasy;
 
-namespace MTest
+namespace MutagenTests
 {
 
     public class IAmAHarness : ITestHarness
@@ -204,7 +204,6 @@ namespace MTest
                 return;
             }
         }
-
 
         [Test]
         public void ExecTestCase_AppliesBindings()
