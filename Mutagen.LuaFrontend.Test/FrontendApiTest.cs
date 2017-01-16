@@ -43,22 +43,20 @@ namespace Mutagen.LuaFrontend.Test
 
         [Test]
         public void BeginTestCase_CallsApi()
-        {
-            Expect.MethodCall(() => apiBridge.CreateFacette("facName", Any<System.Collections.Generic.List<object>>.Value));
-            Expect.MethodCall(() => apiBridge.BeginTestCase("TestHarnessTheFirst", "TstAssembly.dll"));
+        {           
+            Expect.Once.MethodCall(() => apiBridge.BeginTestCase("TestHarnessTheFirst", "TstAssembly.dll"));
 
             ApiAdapter api = IOC.Resolve<ApiAdapter>();
             ReadScript("./LuaScripts/BeginTestCase.lua");
             LuaUtil.PublishObjectMethods(api, luaEnv);
             luaEnv.DoChunk(scriptChunk);
-
             AssertInvocationsWasMade.MatchingExpectationsFor(apiBridge);
         }
 
         [Test]
         public void CallTo_CreateFacette_CallsApi()
         {
-            Expect.MethodCall(() => apiBridge.CreateFacette("facName", Any<System.Collections.Generic.List<object>>.Value));
+            Expect.Once.MethodCall(() => apiBridge.CreateFacette("facName", Any<System.Collections.Generic.List<object>>.Value));
 
             ApiAdapter api = IOC.Resolve<ApiAdapter>();
             ReadScript("./LuaScripts/CreateFacette.lua");
@@ -69,7 +67,7 @@ namespace Mutagen.LuaFrontend.Test
         [Test]
         public void CallTo_AddFacette_CallsApi()
         {
-            Expect.MethodCall(() => apiBridge.AddFacette("fnord", 1, 7));
+            Expect.Once.MethodCall(() => apiBridge.AddFacette("fnord", 1, 7));
 
             ApiAdapter api = IOC.Resolve<ApiAdapter>();
             ReadScript("./LuaScripts/AddFacette.lua");

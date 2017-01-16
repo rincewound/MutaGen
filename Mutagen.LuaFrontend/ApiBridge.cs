@@ -28,9 +28,9 @@ namespace Mutagen.LuaFrontend
             bridge.AddFacette(facetteName, minValues, maxValues);
         }
 
-        public void BeginTestCase(string HarnessName, string AssemblyName)
+        public void BeginTestCase(string harnessName, string assemblyName)
         {
-
+            bridge.BeginTestCase(harnessName, assemblyName);
         }
     }
 }
