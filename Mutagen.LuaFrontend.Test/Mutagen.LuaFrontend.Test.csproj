@@ -69,6 +69,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LuaScripts\BeginTestcase.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="LuaScripts\CreateFacette.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -78,6 +81,10 @@
     <ProjectReference Include="..\Mutagen.LuaFrontend\Mutagen.LuaFrontend.csproj">
       <Project>{ced3980f-eae4-4d88-b458-b888a0e2ea2a}</Project>
       <Name>Mutagen.LuaFrontend</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MutagenRuntime\MutagenRuntime.csproj">
+      <Project>{90766c10-be23-4d6e-a5d7-b55c1add6177}</Project>
+      <Name>MutagenRuntime</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
