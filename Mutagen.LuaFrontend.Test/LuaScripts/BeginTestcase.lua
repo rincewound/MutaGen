@@ -1,0 +1,1 @@
+﻿BeginTestCase("TestHarnessTheFirst", "TstAssembly.dll")

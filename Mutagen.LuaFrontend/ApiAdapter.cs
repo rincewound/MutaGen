@@ -32,5 +32,12 @@ namespace Mutagen.LuaFrontend
         {
             bridge.BeginTestCase(harnessName, assemblyName);
         }
+
+        public void CommitTestCaseCode(string TCFunc)
+        {
+            // Build IAssertable from TCFunc
+
+            bridge.CommitTestCaseCode(null);
+        }
     }
 }

@@ -57,7 +57,7 @@
     <Compile Include="Facette\BitArrayHelper.cs" />
     <Compile Include="ContextEntry.cs" />
     <Compile Include="Facette\Facette.cs" />
-    <Compile Include="Assert\IAssertCollection.cs" />
+    <Compile Include="Assert\IAssertable.cs" />
     <Compile Include="Facette\ListToStringHelper.cs" />
     <Compile Include="ITestContext.cs" />
     <Compile Include="ITestEnvironment.cs" />

@@ -61,7 +61,9 @@ namespace Mutagen.LuaFrontend.Test
             ApiAdapter api = IOC.Resolve<ApiAdapter>();
             ReadScript("./LuaScripts/CreateFacette.lua");
             LuaUtil.PublishObjectMethods(api, luaEnv);
-            luaEnv.DoChunk(scriptChunk);            
+            luaEnv.DoChunk(scriptChunk);
+
+            AssertInvocationsWasMade.MatchingExpectationsFor(apiBridge);
         }
 
         [Test]
@@ -72,7 +74,37 @@ namespace Mutagen.LuaFrontend.Test
             ApiAdapter api = IOC.Resolve<ApiAdapter>();
             ReadScript("./LuaScripts/AddFacette.lua");
             LuaUtil.PublishObjectMethods(api, luaEnv);
-            luaEnv.DoChunk(scriptChunk);            
+            luaEnv.DoChunk(scriptChunk);
+
+            AssertInvocationsWasMade.MatchingExpectationsFor(apiBridge);
+        }
+
+        [Test]
+        public void CallTo_EndTestCase_CallsApi()
+        {
+            Expect.Once.MethodCall(() => apiBridge.CommitTestCaseCode(null));
+
+            ApiAdapter api = IOC.Resolve<ApiAdapter>();
+            ReadScript("./LuaScripts/EndTestCase.lua");
+            LuaUtil.PublishObjectMethods(api, luaEnv);
+            luaEnv.DoChunk(scriptChunk);
+
+            AssertInvocationsWasMade.MatchingExpectationsFor(apiBridge);
+        }
+
+        [Test]
+        public void CallTo_EndTestCase_CreatesAssertable()
+        {
+            Expect.Once.MethodCall(() => apiBridge.CommitTestCaseCode(null));
+
+            ApiAdapter api = IOC.Resolve<ApiAdapter>();
+            ReadScript("./LuaScripts/EndTestCase.lua");
+            LuaUtil.PublishObjectMethods(api, luaEnv);
+            luaEnv.DoChunk(scriptChunk);
+
+            AssertInvocationsWasMade.MatchingExpectationsFor(apiBridge);
+
+            Assert.Fail("Implement");
         }
     }
 }
