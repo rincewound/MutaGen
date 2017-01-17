@@ -18,7 +18,7 @@ A Scenario is what would commonly be called a testcase. Each scenario consists o
 The architecture is inspired by fitnesse, albeit I chose an open frontend for the Scenarios, i.e. a fixed runtime, that will use a backend for the SUT/DUT, that has to be provided by the user. The runtime is invoked by an arbitrary frontend (i.e. a testcase provider!). So, we end up with something like this:
 
 Scenario --- Interpreted by ---> Frontend --- Invokes ---> Runtime --- Invokes ---> Backend
-[<--------------Lua----------------------------------->][<-- C# --------------->][Any .Net, user code]
+[<--------------Lua-------------------------------------->][<-- C# --------------->][Any .Net, user code]
 
 ##Current state
 As of now, I don't have a working version yet. Expect the first bits of code within

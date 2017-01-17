@@ -52,10 +52,10 @@ namespace Mutagen.LuaFrontend.Test
             var ass = new LuaAssertable(lua, luaEnv, scriptChunk);
             var res = ass.Execute();
 
-            Assert.AreEqual(3, res.Count);
-            Assert.AreEqual(true, res[0].result);
+            Assert.AreEqual(3,     res.Count);
+            Assert.AreEqual(true,  res[0].result);
             Assert.AreEqual(false, res[1].result);
-            Assert.AreEqual(true, res[2].result);
+            Assert.AreEqual(true,  res[2].result);
         }
 
         class AssertWidget
@@ -74,9 +74,9 @@ namespace Mutagen.LuaFrontend.Test
             var ass = new LuaAssertable(lua, luaEnv, scriptChunk);
             LuaUtil.PublishObjectMethods(w, luaEnv);
             var res = ass.Execute();
-            Assert.AreEqual(2, res.Count);
+            Assert.AreEqual(2,     res.Count);
             Assert.AreEqual(false, res[0].result);
-            Assert.AreEqual(true, res[1].result);
+            Assert.AreEqual(true,  res[1].result);
         }
 
     }
