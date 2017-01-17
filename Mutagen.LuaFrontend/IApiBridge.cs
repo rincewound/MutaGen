@@ -16,5 +16,6 @@ namespace Mutagen.LuaFrontend
         void AddFacette(string facetteName, int minValues, int maxValues);
         void CommitTestCaseCode(IAssertable tcCode);
         void ExecTestCase();
+        ITestHarness TestHarness();
     }
 }

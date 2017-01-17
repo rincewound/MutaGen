@@ -10,22 +10,21 @@ namespace Mutagen.LuaFrontend
 {
     public class LuaAssertable : IAssertable
     {
-        Lua lua;
         dynamic luaEnv;
-        LuaChunk scriptChunk;
-
         List<AssertResult> res = new List<AssertResult>();
 
-        public LuaAssertable(Lua lua, dynamic env, LuaChunk scriptChnk)
+        public LuaAssertable( dynamic env)
         {
-            this.lua = lua;
-            this.luaEnv = env;
-            this.scriptChunk = scriptChnk;
-            luaEnv.dochunk(scriptChunk);
+            if (env == null)
+                throw new InvalidOperationException("Env instance must not be NULL");
+            luaEnv = env;
         }
 
         public List<AssertResult> Execute()
         {
+            if (luaEnv["ExecuteTest"] == null)
+                throw new InvalidOperationException("env has no method called ExecuteTest. Don't know what to do with this.");
+
             LuaUtil.PublishObjectMethods(this, luaEnv);
             res.Clear();
             luaEnv.ExecuteTest();
@@ -34,7 +33,7 @@ namespace Mutagen.LuaFrontend
 
         public void __ASSERT(bool value)
         {
-            res.Add(new AssertResult { result = value, info = "LuaAssert" });
+            res.Add(new AssertResult { result = value, info = "LuaAssert " + res.Count + 1 });
         }
     }
 }

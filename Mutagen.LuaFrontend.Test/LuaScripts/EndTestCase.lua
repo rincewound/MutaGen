@@ -1,1 +1,1 @@
-﻿CommitTestCaseCode("Execute")
+﻿CommitTestCaseCode()

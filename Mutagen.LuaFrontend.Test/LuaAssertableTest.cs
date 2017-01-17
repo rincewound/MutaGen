@@ -28,19 +28,20 @@ namespace Mutagen.LuaFrontend.Test
             var tc = NUnit.Framework.TestContext.CurrentContext.TestDirectory;
             var data = System.IO.File.ReadAllText(tc + path);
             scriptChunk = lua.CompileChunk(data, "scriptChunk", null);
+            luaEnv.DoChunk(scriptChunk);
         }
 
         [Test]
         public void Assertable_CanBeCreated()
         {
-            IAssertable ass = new LuaAssertable(lua, luaEnv, scriptChunk);
+            IAssertable ass = new LuaAssertable(luaEnv);
         }
 
         [Test]
         public void Execute_CallsLuaExecute()
         {                                               
             ReadScript("./LuaScripts/Assertable.lua");
-            var ass = new LuaAssertable(lua, luaEnv, scriptChunk);
+            var ass = new LuaAssertable(luaEnv);
             Assert.True(ass.Execute()[0].result);
         }
 
@@ -49,7 +50,7 @@ namespace Mutagen.LuaFrontend.Test
         public void Execute_MultipleAssertsAreLogged()
         {
             ReadScript("./LuaScripts/Assertable_MultipleAsserts.lua");
-            var ass = new LuaAssertable(lua, luaEnv, scriptChunk);
+            var ass = new LuaAssertable(luaEnv);
             var res = ass.Execute();
 
             Assert.AreEqual(3,     res.Count);
@@ -71,7 +72,7 @@ namespace Mutagen.LuaFrontend.Test
         {
             AssertWidget w = new AssertWidget();
             ReadScript("./LuaScripts/Assertable_CallOtherObject.lua");
-            var ass = new LuaAssertable(lua, luaEnv, scriptChunk);
+            var ass = new LuaAssertable(luaEnv);
             LuaUtil.PublishObjectMethods(w, luaEnv);
             var res = ass.Execute();
             Assert.AreEqual(2,     res.Count);

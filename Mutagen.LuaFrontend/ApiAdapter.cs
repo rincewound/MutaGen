@@ -1,4 +1,5 @@
 ﻿using MicroIOC;
+using MutagenRuntime;
 using Neo.IronLua;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace Mutagen.LuaFrontend
     {
         [MuImport]
         IApiBridge bridge;
+
+        public LuaGlobalPortable LuaEnv { get; set; }
 
         public void CreateFacette(string facetteName, LuaTable values)
         {
@@ -28,16 +31,28 @@ namespace Mutagen.LuaFrontend
             bridge.AddFacette(facetteName, minValues, maxValues);
         }
 
+        internal void ExecTestCase()
+        {
+            bridge.ExecTestCase();
+        }
+
         public void BeginTestCase(string harnessName, string assemblyName)
         {
             bridge.BeginTestCase(harnessName, assemblyName);
+            var theHarness = bridge.TestHarness();
+            LuaUtil.PublishObjectMethods(theHarness, LuaEnv);
         }
 
-        public void CommitTestCaseCode(string TCFunc)
+        public void CommitTestCaseCode()
         {
             // Build IAssertable from TCFunc
-
-            bridge.CommitTestCaseCode(null);
+            var luaAssertable = new LuaAssertable(LuaEnv);
+            bridge.CommitTestCaseCode(luaAssertable);
         }
+
+        public ITestHarness Testharness()
+        {
+            return Api.Testharness();
+        }    
     }
 }

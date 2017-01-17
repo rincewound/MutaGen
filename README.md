@@ -20,6 +20,15 @@ The architecture is inspired by fitnesse, albeit I chose an open frontend for th
 Scenario --- Interpreted by ---> Frontend --- Invokes ---> Runtime --- Invokes ---> Backend
 [<--------------Lua-------------------------------------->][<-- C# --------------->][Any .Net, user code]
 
+##Implementing a new backend
+A backend is basically any .Net Class, that implements ITestharness and is publicly visible.
+The backend is made available to the frontend by the runtime.
+
+So, what is a backend?
+A backend is a bit of code, that is used to drive the SUT/DUT. If we were to test
+a webservice, that exposes the method "TestMethod", the backend should provide
+means for the testcase to call this method.
+
 ##Current state
 As of now, I don't have a working version yet. Expect the first bits of code within
 Jan '17 and - hopefully - something buildable a couple of weeks later.

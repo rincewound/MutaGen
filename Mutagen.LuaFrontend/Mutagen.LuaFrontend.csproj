@@ -52,10 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiAdapter.cs" />
+    <Compile Include="DefaultApiBridge.cs" />
     <Compile Include="IApiBridge.cs" />
     <Compile Include="LuaAssertable.cs" />
     <Compile Include="LuaUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptRunner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

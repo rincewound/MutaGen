@@ -9,12 +9,13 @@ namespace Mutagen.LuaFrontend.Test
 {
 
     [TestFixture]
-    public class FrontEndApiTest
+    public class ApiAdapterTests
     {
         Lua lua;
         LuaGlobalPortable luaEnv;
         LuaChunk scriptChunk;
-        IApiBridge apiBridge;        
+        IApiBridge apiBridge;
+        ApiAdapter api;
 
         [SetUp]
         public void Setup()
@@ -24,7 +25,9 @@ namespace Mutagen.LuaFrontend.Test
             luaEnv = lua.CreateEnvironment();
             apiBridge = Mock.Interface<IApiBridge>();
             IOC.Register<IApiBridge>( () => apiBridge);
-            IOC.Register<ApiAdapter>(() => new ApiAdapter());
+            IOC.Register<ApiAdapter>( () => new ApiAdapter());
+            api = IOC.Resolve<ApiAdapter>();
+            api.LuaEnv = luaEnv;
         }
 
         private void ReadScript(string path)
@@ -44,9 +47,8 @@ namespace Mutagen.LuaFrontend.Test
         [Test]
         public void BeginTestCase_CallsApi()
         {           
-            Expect.Once.MethodCall(() => apiBridge.BeginTestCase("TestHarnessTheFirst", "TstAssembly.dll"));
-
-            ApiAdapter api = IOC.Resolve<ApiAdapter>();
+            Expect.Once.MethodCall(() => apiBridge.BeginTestCase("SimpleHarness", "Mutagen.LuaFrontend.Test.dll"));
+            Expect.Once.MethodCall(() => apiBridge.TestHarness()).Returns(new SimpleHarness());
             ReadScript("./LuaScripts/BeginTestCase.lua");
             LuaUtil.PublishObjectMethods(api, luaEnv);
             luaEnv.DoChunk(scriptChunk);
@@ -54,11 +56,23 @@ namespace Mutagen.LuaFrontend.Test
         }
 
         [Test]
+        public void BeginTestCase_MakesTestharnessAvailableToScript()
+        {
+            var myHarness = new SimpleHarness();
+            Expect.Once.MethodCall(() => apiBridge.BeginTestCase("SimpleHarness", "Mutagen.LuaFrontend.Test.dll"));
+            Expect.Once.MethodCall(() => apiBridge.TestHarness()).Returns(myHarness);
+            ReadScript("./LuaScripts/BeginTestCase_UseHarness.lua");
+            LuaUtil.PublishObjectMethods(api, luaEnv);            
+            luaEnv.DoChunk(scriptChunk);
+            AssertInvocationsWasMade.MatchingExpectationsFor(apiBridge);
+            Assert.AreEqual(myHarness.lastPrint, "Test");
+        }
+
+        [Test]
         public void CallTo_CreateFacette_CallsApi()
         {
             Expect.Once.MethodCall(() => apiBridge.CreateFacette("facName", Any<System.Collections.Generic.List<object>>.Value));
 
-            ApiAdapter api = IOC.Resolve<ApiAdapter>();
             ReadScript("./LuaScripts/CreateFacette.lua");
             LuaUtil.PublishObjectMethods(api, luaEnv);
             luaEnv.DoChunk(scriptChunk);
@@ -71,7 +85,6 @@ namespace Mutagen.LuaFrontend.Test
         {
             Expect.Once.MethodCall(() => apiBridge.AddFacette("fnord", 1, 7));
 
-            ApiAdapter api = IOC.Resolve<ApiAdapter>();
             ReadScript("./LuaScripts/AddFacette.lua");
             LuaUtil.PublishObjectMethods(api, luaEnv);
             luaEnv.DoChunk(scriptChunk);
@@ -82,29 +95,14 @@ namespace Mutagen.LuaFrontend.Test
         [Test]
         public void CallTo_EndTestCase_CallsApi()
         {
-            Expect.Once.MethodCall(() => apiBridge.CommitTestCaseCode(null));
+            Expect.Once.MethodCall(() => apiBridge.CommitTestCaseCode(Any<IAssertable>.Value.Matching(x => x != null).AsInterface));
 
-            ApiAdapter api = IOC.Resolve<ApiAdapter>();
-            ReadScript("./LuaScripts/EndTestCase.lua");
+            api.LuaEnv = luaEnv;
+            ReadScript("./LuaScripts/EndTestCase.lua");            
             LuaUtil.PublishObjectMethods(api, luaEnv);
             luaEnv.DoChunk(scriptChunk);
 
-            AssertInvocationsWasMade.MatchingExpectationsFor(apiBridge);
-        }
-
-        [Test]
-        public void CallTo_EndTestCase_CreatesAssertable()
-        {
-            Expect.Once.MethodCall(() => apiBridge.CommitTestCaseCode(null));
-
-            ApiAdapter api = IOC.Resolve<ApiAdapter>();
-            ReadScript("./LuaScripts/EndTestCase.lua");
-            LuaUtil.PublishObjectMethods(api, luaEnv);
-            luaEnv.DoChunk(scriptChunk);
-
-            AssertInvocationsWasMade.MatchingExpectationsFor(apiBridge);
-
-            Assert.Fail("Implement");
+            AssertInvocationsWasMade.MatchingExpectationsFor(apiBridge);            
         }
     }
 }
