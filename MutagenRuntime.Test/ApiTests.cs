@@ -101,19 +101,19 @@ namespace MutagenTests
             Api.BeginTestCase(n.AssemblyQualifiedName, null);
         }
 
-        [Ignore("Not testable this way")]
+        [Test]
         public void BeginTestCase_CanUseSimpleNameIfAssemblynameIsGiven()
         {
-            Api.BeginTestCase("MTest.IAmAHarness", @"./MutagenRuntime.Test.dll");
+            // Black Magic: NUnit sets the working dir to a crappy place,
+            // so we're shit out of luck, if we try to access a file relative to
+            // our working dir. To get around this problem we magic the correct
+            // path here and reset the working directory to reflect this:
+            var dir = AppDomain.CurrentDomain.BaseDirectory;
+            Environment.CurrentDirectory = dir;
+
+            Api.BeginTestCase("MutagenTests.IAmAHarness", @"./MutagenRuntime.Test.dll");
 
             Assert.IsNotNull(Api.Testharness());
-        }
-
-        [Ignore("Not testable this way")]
-        public void BeginTestCase_ClearsTestContext()
-        {
-            // Can we test this at all?
-            Assert.Fail("Implement");
         }
 
         [Test]
