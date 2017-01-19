@@ -66,10 +66,31 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FrontendApiTest.cs" />
+    <Compile Include="LuaAssertableTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptRunnerTests.cs" />
+    <Compile Include="SimpleHarness.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LuaScripts\Assertable_CallOtherObject.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LuaScripts\BeginTestcase.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LuaScripts\BeginTestCase_UseHarness.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="LuaScripts\CreateFacette.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LuaScripts\EndTestCase.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LuaScripts\FullTestCase.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="LuaScripts\SimpleTestCase.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -79,9 +100,23 @@
       <Project>{ced3980f-eae4-4d88-b458-b888a0e2ea2a}</Project>
       <Name>Mutagen.LuaFrontend</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MutagenRuntime\MutagenRuntime.csproj">
+      <Project>{90766c10-be23-4d6e-a5d7-b55c1add6177}</Project>
+      <Name>MutagenRuntime</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="LuaScripts\AddFacette.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LuaScripts\Assertable.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LuaScripts\Assertable_MultipleAsserts.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

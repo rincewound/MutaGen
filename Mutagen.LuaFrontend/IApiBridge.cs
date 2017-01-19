@@ -1,4 +1,5 @@
-﻿using Neo.IronLua;
+﻿using MutagenRuntime;
+using Neo.IronLua;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,9 @@ namespace Mutagen.LuaFrontend
 
         void BeginTestCase(string usedHarness, string assemblyName);
         void AddFacette(string facetteName, int minValues, int maxValues);
-        //void CommitTestCaseCode(IAssertable code)
+        void CommitTestCaseCode(IAssertable tcCode);
         void ExecTestCase();
+        ITestHarness TestHarness();
+        void Init();
     }
 }

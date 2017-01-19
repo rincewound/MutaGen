@@ -242,5 +242,49 @@ namespace MutagenTests
             Assert.AreEqual(6, TestyHarness.valueSets.Count);
         }
 
+        [Test]
+        public void ExecTestCase_AppliesCorrectNumberOfBindingsMultipleFacettes()
+        {
+            var n = typeof(TestyHarness);
+            TestyHarness.valueSets.Clear();
+            IOCSetup();
+
+            Api.CreateFacette("TestFac", new List<object>() { 1, 2, 3 });
+            Api.CreateFacette("TestFac2", new List<object>() { 4, 5, 6 });
+            Api.BeginTestCase(n.AssemblyQualifiedName, null);
+            Api.AddFacette("TestFac", 1, 2);
+            Api.AddFacette("TestFac2", 1, 1);
+
+            var coll = new AssertCollection();
+            coll.Push(() => true);
+            Api.CommitTestCaseCode(coll);
+            Api.ExecTestCase();
+
+            var res = Api.GetResults();
+
+            Assert.AreEqual(18, res.Count);
+        }
+
+        [Test]
+        public void ExecTestCase_ReturnsCorrectNumberOfResults()
+        {
+            var n = typeof(TestyHarness);
+            TestyHarness.valueSets.Clear();
+            IOCSetup();
+
+            Api.CreateFacette("TestFac", new List<object>() { 1, 2, 3 });
+            Api.BeginTestCase(n.AssemblyQualifiedName, null);
+            Api.AddFacette("TestFac", 1, 2);
+
+            var coll = new AssertCollection();
+            coll.Push(() => true);
+            Api.CommitTestCaseCode(coll);
+            Api.ExecTestCase();
+
+            var res = Api.GetResults();
+
+            Assert.AreEqual(6, res.Count);
+        }
+
     }
 }

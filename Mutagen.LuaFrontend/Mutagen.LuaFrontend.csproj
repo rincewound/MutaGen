@@ -51,13 +51,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiBridge.cs" />
+    <Compile Include="ApiAdapter.cs" />
+    <Compile Include="DefaultApiBridge.cs" />
     <Compile Include="IApiBridge.cs" />
+    <Compile Include="LuaAssertable.cs" />
     <Compile Include="LuaUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScriptRunner.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MutagenRuntime\MutagenRuntime.csproj">
+      <Project>{90766c10-be23-4d6e-a5d7-b55c1add6177}</Project>
+      <Name>MutagenRuntime</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
