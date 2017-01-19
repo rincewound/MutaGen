@@ -15,24 +15,27 @@ namespace Mutagen.LuaFrontend.Test
             lastPrint = data;
         }
 
-        public void AddFacette(Facette f)
-        {
-            throw new NotImplementedException();
-        }
+        public void ApplyF01(List<object> data) { }
+        public void ApplyF02(List<object> data) { }
 
-        public void AddFacetteSlice()
-        {
-            throw new NotImplementedException();
-        }
+        //public void AddFacette(Facette f)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public void AddMultiSelect()
-        {
-            throw new NotImplementedException();
-        }
+        //public void AddFacetteSlice()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public List<object> GetFacetteSelection()
-        {
-            throw new NotImplementedException();
-        }
+        //public void AddMultiSelect()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public List<object> GetFacetteSelection()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

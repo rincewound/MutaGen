@@ -26,6 +26,11 @@ namespace Mutagen.LuaFrontend
             bridge.CreateFacette(facetteName, lst);
         }
 
+        public void Init()
+        {
+            bridge.Init();
+        }
+
         public void AddFacette(string facetteName, int minValues, int maxValues)
         {
             bridge.AddFacette(facetteName, minValues, maxValues);

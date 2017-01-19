@@ -28,6 +28,8 @@ namespace MutagenRuntime
         static IAssertable testCaseCode;
         static ITestHarness theHarness;
 
+        static List<TestResult> testResults = new List<TestResult>();
+
         public static void Init()
         {
             te = IOC.Resolve<ITestEnvironment>();
@@ -84,6 +86,7 @@ namespace MutagenRuntime
             theHarness = harness.GetConstructor(new Type[0]).Invoke(new object[0]) as ITestHarness;
             testContext = IOC.Resolve<ITestContext>();
             testCaseCode = null;
+            testResults = new List<TestResult>();
         }
 
 
@@ -134,6 +137,11 @@ namespace MutagenRuntime
                 logger.Info("=================Starting next run========================");
                 ApplyBinding(bnd);
                 var result = testCaseCode.Execute();
+
+                var tr = new TestResult();
+                tr.assertResults = result;
+                tr.binding = bnd;
+                testResults.Add(tr);
             }
             logger.Info("===============END EXEC===================================");
         }
@@ -162,6 +170,11 @@ namespace MutagenRuntime
         public static ITestHarness Testharness()
         {
             return theHarness;
+        }
+
+        public static List<TestResult> GetResults()
+        {
+            return testResults;
         }
     }
 }

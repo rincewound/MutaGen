@@ -17,5 +17,6 @@ namespace Mutagen.LuaFrontend
         void CommitTestCaseCode(IAssertable tcCode);
         void ExecTestCase();
         ITestHarness TestHarness();
+        void Init();
     }
 }

@@ -1,10 +1,4 @@
-﻿--CreateFacette("F01", {1, 2})
---CreateFacette("F02", {3, 4});
-
---BeginTestCase("SimpleHarness", "Mutagen.FrontEnd.Test.dll")
---AddFacette("F01", 1, 2)
---AddFacette("F02", 1, 1)
-
+BeginTestCase("SimpleHarness", "Mutagen.FrontEnd.Test.dll")
 CommitTestCaseCode()
 
 function ExecuteTest()
