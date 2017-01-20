@@ -1,4 +1,5 @@
 ﻿using MicroIOC;
+using MutagenRuntime;
 using Neo.IronLua;
 using System;
 using System.Collections.Generic;
@@ -31,12 +32,13 @@ namespace Mutagen.LuaFrontend
             myChunk = myLua.CompileChunk(new StreamReader(scriptSource), "__mutagenScript", null);
         }
 
-        public void Run()
+        public List<TestResult> Run()
         {
             LuaUtil.PublishObjectMethods(api, luaEnv);
             api.LuaEnv = luaEnv;
             luaEnv.DoChunk(myChunk);
             api.ExecTestCase();
+            return api.TestResults();
         }
 
     }
