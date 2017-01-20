@@ -157,6 +157,12 @@ namespace MutagenRuntime
 
                 var bindingSetterFunction = "Apply" + current.theFacette.Name;
                 var theFunc = theHarness.GetType().GetMethod(bindingSetterFunction);
+
+                if(theFunc == null)
+                {
+                    throw new NoFunctionInHarnessException(bindingSetterFunction);
+                }
+
                 theFunc.Invoke(theHarness, System.Reflection.BindingFlags.Default, null, 
                                new object[] { vals}, 
                                System.Globalization.CultureInfo.DefaultThreadCurrentCulture);

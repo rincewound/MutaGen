@@ -158,6 +158,11 @@ namespace MutagenTests
             {
                 valueSets.Add(data);
             }
+
+            virtual public void ApplyTestFac2(List<object> data)
+            {
+                valueSets.Add(data);
+            }
         }
 
         private void IOCSetup()
