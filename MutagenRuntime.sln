@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mutagen.LuaFrontend", "Muta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mutagen.LuaFrontend.Test", "Mutagen.LuaFrontend.Test\Mutagen.LuaFrontend.Test.csproj", "{EAD43F05-83B5-4137-A4CF-3B15D09329C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mutagen.LuaRunner", "Mutagen.LuaRunner\Mutagen.LuaRunner.csproj", "{7340184C-4EC7-4877-9792-5BA4F5C56E70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mutatgen.LuaRunner.Test", "Mutatgen.LuaRunner.Test\Mutatgen.LuaRunner.Test.csproj", "{FDF3A107-D59C-403F-B198-F38E7C713CE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{EAD43F05-83B5-4137-A4CF-3B15D09329C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAD43F05-83B5-4137-A4CF-3B15D09329C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAD43F05-83B5-4137-A4CF-3B15D09329C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7340184C-4EC7-4877-9792-5BA4F5C56E70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7340184C-4EC7-4877-9792-5BA4F5C56E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7340184C-4EC7-4877-9792-5BA4F5C56E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7340184C-4EC7-4877-9792-5BA4F5C56E70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDF3A107-D59C-403F-B198-F38E7C713CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDF3A107-D59C-403F-B198-F38E7C713CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDF3A107-D59C-403F-B198-F38E7C713CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDF3A107-D59C-403F-B198-F38E7C713CE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

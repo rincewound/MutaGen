@@ -152,10 +152,10 @@ namespace MutagenRuntime
             do
             {
                 var vals = current.theFacette.GetValues(current.valueSet);
-                logger.Info("Apply binding for facette " + bnd.theFacette.Name);
+                logger.Info("Apply binding for facette " + current.theFacette.Name);
                 logger.Info("Using values: " + vals.EntriesToString());
 
-                var bindingSetterFunction = "Apply" + bnd.theFacette.Name;
+                var bindingSetterFunction = "Apply" + current.theFacette.Name;
                 var theFunc = theHarness.GetType().GetMethod(bindingSetterFunction);
                 theFunc.Invoke(theHarness, System.Reflection.BindingFlags.Default, null, 
                                new object[] { vals}, 

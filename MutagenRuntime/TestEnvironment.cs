@@ -39,6 +39,17 @@ namespace MutagenRuntime
                     b.next = next.Clone();
                 return b;
             }
+
+            public override string ToString()
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine(theFacette.Name + " : " + theFacette.GetValues(valueSet).EntriesToString());
+
+                if (next != null)
+                    sb.AppendLine(next.ToString());
+                return sb.ToString();
+
+            }
         }
 
         public virtual void AddFacette(Facette fac)
@@ -85,8 +96,8 @@ namespace MutagenRuntime
                 foreach(var tb in tailBindings)
                 {
                     var newBinding = myB.Clone();
-                    myB.next = tb.Clone();
-                    result.Add(myB);
+                    newBinding.next = tb.Clone();
+                    result.Add(newBinding);
                 }
             }
             return result;
