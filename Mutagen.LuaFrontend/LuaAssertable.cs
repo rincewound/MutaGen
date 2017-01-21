@@ -1,5 +1,6 @@
 ﻿using MutagenRuntime;
 using Neo.IronLua;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Mutagen.LuaFrontend
 {
     public class LuaAssertable : IAssertable
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         dynamic luaEnv;
         List<AssertResult> res = new List<AssertResult>();
 
@@ -33,7 +35,9 @@ namespace Mutagen.LuaFrontend
 
         public void __ASSERT(bool value)
         {
-            res.Add(new AssertResult { result = value, info = "LuaAssert " + res.Count + 1 });
+            if (!value)
+                logger.Error("Assert failed on __ASSERT " + (res.Count + 1));
+            res.Add(new AssertResult { result = value, info = "LuaAssert " + (res.Count + 1) });
         }
     }
 }

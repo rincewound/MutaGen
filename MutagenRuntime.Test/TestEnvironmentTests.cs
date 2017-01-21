@@ -26,6 +26,21 @@ namespace MutagenTests
         }
 
         [Test]
+        public void GetFacette_ThowsNoSuchFacetteException_IfFacetteWasNotAdded()
+        {
+            try
+            {
+                te.GetFacette("notcreated");
+                Assert.Fail("did not throw!");
+            }
+            catch (MutagenRuntime.NoSuchFacetteException)
+            {
+
+            }
+        }
+
+
+        [Test]
         public void CreateBindings_ReturnsBinding()
         {
             var f = new Facette("fnord", new List<object> { 1, 2, 3 });

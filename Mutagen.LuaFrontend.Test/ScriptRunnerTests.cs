@@ -44,7 +44,7 @@ namespace Mutagen.LuaFrontend.Test
             runner.Load(strm);
 
             Expect.MethodCall(() => apiBridge.BeginTestCase("SimpleHarness", "Mutagen.FrontEnd.Test.dll"));
-            
+            Expect.Once.MethodCall(() => apiBridge.TestResults()).Returns(new List<TestResult>());
             Expect.Once.MethodCall(() => apiBridge.TestHarness()).Returns(hr);
 
             Expect.Once.MethodCall(() => apiBridge.CommitTestCaseCode(Any<IAssertable>.Value.Matching(x => x != null).AsInterface));
