@@ -128,9 +128,10 @@ namespace MutagenRuntime
                 logger.ErrorException("Called ExecTestCase without specifying a testharness (call BeginTestCase first!)!", ex);
                 throw ex;
             }
-
+            logger.Info("================INIT TEST CASE============================");
             var bindings = te.CreateBindings(testContext);
             logger.Info("================EXEC TEST CASE============================");
+            logger.Info("Testcase contains " + bindings.Count + " bindings.");
             foreach (var bnd in bindings)
             {
                 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace MutagenRuntime
 
    public class TestEnvironment : ITestEnvironment
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         Dictionary<string, Facette> allFacettes = new Dictionary<string, Facette>();
 
         public class Binding
@@ -54,12 +57,17 @@ namespace MutagenRuntime
 
         public virtual void AddFacette(Facette fac)
         {
+            logger.Info("Added Facette " + fac + " to test environemnt");
             allFacettes.Add(fac.Name, fac);
         }
 
         public Facette GetFacette(string facetteName)
         {
-            return allFacettes[facetteName];
+            Facette fac;
+            if (!allFacettes.TryGetValue(facetteName, out fac))
+                throw new NoSuchFacetteException();
+
+            return fac;
         }
 
         public List<Binding> CreateBindings(ITestContext testContext)
@@ -106,12 +114,16 @@ namespace MutagenRuntime
         private List<Facette.SelectResult> CollectFacetteValues(ITestContext testContext)
         {
             List<Facette.SelectResult> facetteValues = new List<Facette.SelectResult>();
+            logger.Info("Collecting valid values for facettes...");
 
             for (int i = 0; i < testContext.GetEntries().Count; i++)
             {
                 var entry = testContext.GetEntries()[i];
                 var fac = GetFacette(entry.facetteName);
                 var allValues = fac.GetValidCombinations(entry.limitLow, entry.limitHigh);
+
+                logger.Info("   " + fac.Name + " uses " + entry.limitLow + " to " + entry.limitHigh + " values per combination, resulting in " + allValues.valueCombinations.Count + " sets of values.");
+
                 facetteValues.Add(allValues);
             }
             return facetteValues;

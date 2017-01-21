@@ -52,6 +52,7 @@
     <Compile Include="Assert\AssertCollection.cs" />
     <Compile Include="Assert\AssertDelegate.cs" />
     <Compile Include="Assert\AssertResult.cs" />
+    <Compile Include="Exception\NoSuchFacetteException.cs" />
     <Compile Include="Exception\NoTestCaseBegunException.cs" />
     <Compile Include="Exception\NoTestCaseException.cs" />
     <Compile Include="Facette\BitArrayHelper.cs" />
