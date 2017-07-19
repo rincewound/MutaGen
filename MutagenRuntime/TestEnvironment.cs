@@ -41,8 +41,8 @@ namespace MutagenRuntime
             {
                 theFacette = other.theFacette;
                 valueSet = other.valueSet;
-                this.next = next;
-                this.prev = prev;
+                this.next = other.next;
+                this.prev = other.prev;
             }
 
             public Binding Clone()
@@ -81,8 +81,9 @@ namespace MutagenRuntime
 
                 // constraint is active, check if the constrained facette's valueset
                 // fullfills the constraint.
+                var head = Head();
 
-                return !Head().IsValuesetLegal(c);                    
+                return !head.IsValuesetLegal(c);                    
             }
 
             private bool IsValuesetLegal(Constraint c)
