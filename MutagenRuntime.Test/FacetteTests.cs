@@ -147,14 +147,5 @@ namespace MutagenTests
             Assert.IsTrue(fac.GetValues(new BitArray(new[] { true, false, true, false, false })).SequenceEqual(new List<object> { 1, 3 }));
             Assert.IsTrue(fac.GetValues(new BitArray(new[] { false, true, false, true, false })).SequenceEqual(new List<object> { 2, 4 }));
         }
-
-        [Test]
-        public void Facette_ViolatesConstraint_YieldsTrue_For_SingleConstraint()
-        {
-            //Facette f0;
-            //Facette f1 = new Facette("F1", new List<object> { 1, 2 });
-            //Constraint c = new Constraint(f1, f0, (x) => true, new List<object> { 1 });
-            Assert.Fail("Fix me!");
-        }
     }
 }

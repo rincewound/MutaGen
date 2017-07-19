@@ -205,5 +205,28 @@ namespace MutagenTests
 
             Assert.AreEqual(0, theBinding.Count);
         }
+
+        [Test]
+        public void CreateBindings_HonorsMultipleConstraints_IsolatedBackwardConstraint()
+        {
+            var f1 = new Facette("Head", new List<object> { 1, 2, 3, 4, 5, 6 });
+            var f2 = new Facette("Middle", new List<object> { 4 , 5, 6, 7});
+            var f3 = new Facette("Tail", new List<object> { 6 });
+
+            te.AddFacette(f1);
+            te.AddFacette(f2);
+            te.AddFacette(f3);
+            te.AddConstraint(new Constraint(f3, f1, x => true, new List<object> { 1 }));
+            te.AddConstraint(new Constraint(f3, f2, x => true, new List<object> { 4 }));
+
+            var testContext = new MutagenRuntime.TestContext();
+            testContext.AddFacette("Head", 1, 1);
+            testContext.AddFacette("Middle", 1, 1);
+            testContext.AddFacette("Tail", 1, 1);
+
+            var theBinding = te.CreateBindings(testContext);
+
+            Assert.AreEqual(1, theBinding.Count);
+        }
     }
 }
