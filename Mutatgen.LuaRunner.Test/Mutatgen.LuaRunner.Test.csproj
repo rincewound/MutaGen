@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EAD43F05-83B5-4137-A4CF-3B15D09329C9}</ProjectGuid>
+    <ProjectGuid>{FDF3A107-D59C-403F-B198-F38E7C713CE8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mutagen.LuaFrontend.Test</RootNamespace>
-    <AssemblyName>Mutagen.LuaFrontend.Test</AssemblyName>
+    <RootNamespace>Mutatgen.LuaRunner.Test</RootNamespace>
+    <AssemblyName>Mutatgen.LuaRunner.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,28 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MicroIOC">
-      <HintPath>..\MicroIOC\MicroIOC.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.JScript" />
-    <Reference Include="Neo.Lua, Version=5.3.0.0, Culture=neutral, PublicKeyToken=fdb0cd4fe8a6e3b2, processorArchitecture=MSIL">
-      <HintPath>..\packages\NeoLua.1.2.21\lib\net45\Neo.Lua.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Neo.Lua.Desktop, Version=5.3.0.0, Culture=neutral, PublicKeyToken=fdb0cd4fe8a6e3b2, processorArchitecture=MSIL">
-      <HintPath>..\packages\NeoLua.1.2.21\lib\net45\Neo.Lua.Desktop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="nunit.framework, Version=3.6.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.6.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Simple.Mocking, Version=1.1.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Simple.Mocking.1.1.0.4\lib\net45\Simple.Mocking.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -67,66 +50,11 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="FrontendApiTest.cs" />
-    <Compile Include="LuaAssertableTest.cs" />
+    <Compile Include="ParameterExtractorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScriptRunnerTests.cs" />
-    <Compile Include="SimpleHarness.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="LuaScripts\Assertable_CallOtherObject.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="LuaScripts\BeginTestcase.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="LuaScripts\BeginTestCase_UseHarness.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="LuaScripts\CreateFacette.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="LuaScripts\EndTestCase.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="LuaScripts\Fail.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="LuaScripts\FullTestCase.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="LuaScripts\SimpleTestCase.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Mutagen.LuaFrontend\Mutagen.LuaFrontend.csproj">
-      <Project>{ced3980f-eae4-4d88-b458-b888a0e2ea2a}</Project>
-      <Name>Mutagen.LuaFrontend</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MutagenRuntime\MutagenRuntime.csproj">
-      <Project>{90766c10-be23-4d6e-a5d7-b55c1add6177}</Project>
-      <Name>MutagenRuntime</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="LuaScripts\AddFacette.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="LuaScripts\Assertable.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="LuaScripts\Assertable_MultipleAsserts.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

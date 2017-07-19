@@ -10,4 +10,5 @@ CommitTestCaseCode()
 function ExecuteTest()
   __ASSERT(true)
   __ASSERT(false)
+  HarnessPrint("fnord")
 end;

@@ -43,5 +43,10 @@ namespace Mutagen.LuaFrontend
         {
             return Api.Testharness();
         }
+
+        public List<TestResult> TestResults()
+        {
+            return Api.GetResults();
+        }
     }
 }
