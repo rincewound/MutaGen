@@ -18,5 +18,6 @@ namespace Mutagen.LuaFrontend
         void ExecTestCase();
         ITestHarness TestHarness();
         void Init();
+        List<TestResult> TestResults();
     }
 }

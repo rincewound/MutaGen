@@ -36,6 +36,11 @@ namespace Mutagen.LuaFrontend
             bridge.AddFacette(facetteName, minValues, maxValues);
         }
 
+        internal List<TestResult> TestResults()
+        {
+            return bridge.TestResults();
+        }
+
         internal void ExecTestCase()
         {
             bridge.ExecTestCase();
