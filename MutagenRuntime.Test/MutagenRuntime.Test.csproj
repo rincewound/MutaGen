@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="ApiTests.cs" />
     <Compile Include="AssertCollection.cs" />
+    <Compile Include="ConstraintTest.cs" />
     <Compile Include="FacetteTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestEnvironmentTests.cs" />

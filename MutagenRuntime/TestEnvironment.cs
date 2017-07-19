@@ -18,19 +18,31 @@ namespace MutagenRuntime
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         Dictionary<string, Facette> allFacettes = new Dictionary<string, Facette>();
+        List<Constraint> allConstraints = new List<Constraint>();
 
+        /// <summary>
+        /// A Binding is a concrete value set used for a given
+        /// facette, i.e. it stores, how a facette should be configured
+        /// during a testrun.
+        /// 
+        /// The complete configuration of the environment consists of several
+        /// lists of bindings.
+        /// </summary>
         public class Binding
         {
             public Facette theFacette;
             public BitArray valueSet;
             public Binding next;
+            public Binding prev;
 
             public Binding() { }
-            public Binding(Binding other, Binding next)
+
+            public Binding(Binding other, Binding next, Binding prev)
             {
                 theFacette = other.theFacette;
                 valueSet = other.valueSet;
                 this.next = next;
+                this.prev = prev;
             }
 
             public Binding Clone()
@@ -38,9 +50,58 @@ namespace MutagenRuntime
                 Binding b = new Binding();
                 b.theFacette = theFacette;
                 b.valueSet = valueSet;
+                b.prev = prev;
                 if(next != null)
                     b.next = next.Clone();
                 return b;
+            }
+
+            public Binding Head()
+            {
+                if (prev != null)
+                    return prev.Head();
+                return this;
+            }
+
+            // Should yield true, if the binding cannot fulfill the constraint
+            // c.
+            public bool ViolatesConstraint(Constraint c)
+            {
+                if(!c.IsActive(theFacette, valueSet))
+                {
+                    // the constraint does not apply to this concrete binding. Ask
+                    // next in list.
+                    if (next != null)
+                        return next.ViolatesConstraint(c);
+
+                    // we're at the end of the chain and nobody bothered yet - 
+                    // so we apparently don't violate the constraint.
+                    return false;
+                }
+
+                // constraint is active, check if the constrained facette's valueset
+                // fullfills the constraint.
+
+                return !Head().IsValuesetLegal(c);                    
+            }
+
+            private bool IsValuesetLegal(Constraint c)
+            {
+                if (!c.ConstrainsFacette(theFacette))
+                {
+                    if (next == null)
+                    {
+                        return true;
+                    }
+                    return next.IsValuesetLegal(c);
+                }
+
+                var valuesetIsLegal = c.ValueSetFullfillsConstraint(theFacette, theFacette.GetValues(valueSet));
+                if (!valuesetIsLegal)
+                    return false;
+                if (next == null)
+                    return valuesetIsLegal;
+                return next.IsValuesetLegal(c);
             }
 
             public override string ToString()
@@ -59,6 +120,11 @@ namespace MutagenRuntime
         {
             logger.Info("Added Facette " + fac + " to test environemnt");
             allFacettes.Add(fac.Name, fac);
+        }
+
+        public virtual void AddConstraint(Constraint c)
+        {
+            allConstraints.Add(c);
         }
 
         public Facette GetFacette(string facetteName)
@@ -97,14 +163,21 @@ namespace MutagenRuntime
                 return myBindings;
 
             // Get Subbindings:
+            // We need to apply any constraints here
             List<Binding> result = new List<Binding>();
             var tailBindings = CreateBindingsImpl(usedFacettes.Skip(1).ToList());
-            foreach(var myB in myBindings)
-            {
-                foreach(var tb in tailBindings)
+            // Possible performance issue: We check each binding against all constraints.
+            foreach (var myB in myBindings)
+            {                
+                foreach (var tb in tailBindings)
                 {
                     var newBinding = myB.Clone();
                     newBinding.next = tb.Clone();
+                    newBinding.next.prev = newBinding;
+
+                    if (allConstraints.Any(x => newBinding.ViolatesConstraint(x)))
+                        continue;
+
                     result.Add(newBinding);
                 }
             }

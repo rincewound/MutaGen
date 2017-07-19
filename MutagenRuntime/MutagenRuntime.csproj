@@ -57,6 +57,7 @@
     <Compile Include="Exception\NoTestCaseException.cs" />
     <Compile Include="Facette\BitArrayHelper.cs" />
     <Compile Include="ContextEntry.cs" />
+    <Compile Include="Facette\Constraint.cs" />
     <Compile Include="Facette\Facette.cs" />
     <Compile Include="Assert\IAssertable.cs" />
     <Compile Include="Facette\ListToStringHelper.cs" />
