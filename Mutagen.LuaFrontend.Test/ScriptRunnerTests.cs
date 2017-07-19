@@ -87,6 +87,10 @@ namespace Mutagen.LuaFrontend.Test
             var results = Api.GetResults();
 
             Assert.AreEqual(6, results.Count);
+            var harness = Api.Testharness() as SimpleHarness;
+
+            Assert.AreEqual("fnord", harness.lastPrint);
+
         }
 
     }

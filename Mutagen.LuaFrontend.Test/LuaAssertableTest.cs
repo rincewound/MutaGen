@@ -15,19 +15,22 @@ namespace Mutagen.LuaFrontend.Test
         Lua lua;
         LuaGlobalPortable luaEnv;
         LuaChunk scriptChunk;
+        LuaCompileOptions options;
 
         [SetUp]
         public void Setup()
         {
             lua = new Lua();
             luaEnv = lua.CreateEnvironment();
+            options = new LuaCompileOptions();
+            options.DebugEngine = new LuaStackTraceDebugger();
         }
 
         private void ReadScript(string path)
         {
             var tc = NUnit.Framework.TestContext.CurrentContext.TestDirectory;
             var data = System.IO.File.ReadAllText(tc + path);
-            scriptChunk = lua.CompileChunk(data, "scriptChunk", null);
+            scriptChunk = lua.CompileChunk(data, "scriptChunk", options);
             luaEnv.DoChunk(scriptChunk);
         }
 
@@ -78,6 +81,16 @@ namespace Mutagen.LuaFrontend.Test
             Assert.AreEqual(2,     res.Count);
             Assert.AreEqual(false, res[0].result);
             Assert.AreEqual(true,  res[1].result);
+        }
+
+
+
+        [Test]
+        public void Execute_CanUseDebugHook()
+        {
+            ReadScript("./LuaScripts/Fail.lua");
+            var ass = new LuaAssertable(luaEnv);           
+            var res = ass.Execute();
         }
 
     }

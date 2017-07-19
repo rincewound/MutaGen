@@ -63,8 +63,8 @@ namespace MutagenTests
             var testContext = new MutagenRuntime.TestContext();
             testContext.AddFacette("fnord", 1, 1);
 
-            var theBinding = te.CreateBindings(testContext);
-            Assert.IsNotNull(theBinding[0].theFacette);
+            var theBinding = te.CreateBindings(testContext);            
+            Assert.IsNotNull(theBinding[0].allBindings[0].Key);
         }
 
         [Test]
@@ -106,7 +106,8 @@ namespace MutagenTests
             // Bindings are organised as a singly linked list, so we
             // should be able to access the last item in the list (3 facettes mean, that we
             // always get a list of three entries)
-            Assert.IsNull(theBinding[0].next.next.next);
+            //Assert.IsNull(theBinding[0].next.next.next);
+            Assert.AreEqual(theBinding[0].allBindings.Count, 3);
         }
 
 
@@ -131,17 +132,17 @@ namespace MutagenTests
             var B01 = new BitArray(new[] { false, true });
             var B10 = new BitArray(new[] { true, false });
 
-            Assert.IsTrue(theBinding[0].valueSet.SameAs(B10));
-            Assert.IsTrue(theBinding[0].next.valueSet.SameAs(B10));
+            Assert.IsTrue(theBinding[0].allBindings[0].Value.SameAs(B10));
+            Assert.IsTrue(theBinding[0].allBindings[1].Value.SameAs(B10));
 
-            Assert.IsTrue(theBinding[1].valueSet.SameAs(B10));
-            Assert.IsTrue(theBinding[1].next.valueSet.SameAs(B01));
+            Assert.IsTrue(theBinding[1].allBindings[0].Value.SameAs(B10));
+            Assert.IsTrue(theBinding[1].allBindings[1].Value.SameAs(B01));
 
-            Assert.IsTrue(theBinding[2].valueSet.SameAs(B01));
-            Assert.IsTrue(theBinding[2].next.valueSet.SameAs(B10));
+            Assert.IsTrue(theBinding[2].allBindings[0].Value.SameAs(B01));
+            Assert.IsTrue(theBinding[2].allBindings[1].Value.SameAs(B10));
 
-            Assert.IsTrue(theBinding[3].valueSet.SameAs(B01));
-            Assert.IsTrue(theBinding[3].next.valueSet.SameAs(B01));
+            Assert.IsTrue(theBinding[3].allBindings[0].Value.SameAs(B01));
+            Assert.IsTrue(theBinding[3].allBindings[1].Value.SameAs(B01));
 
         }
 

@@ -30,84 +30,60 @@ namespace MutagenRuntime
         /// </summary>
         public class Binding
         {
-            public Facette theFacette;
-            public BitArray valueSet;
-            public Binding next { get;  set; }
-            public Binding prev { get;  set; }
+            public List<KeyValuePair<Facette, BitArray>> allBindings = new List<KeyValuePair<Facette, BitArray>>();
 
             public Binding() { }
+
+            public void PushValueset(Facette f, BitArray v)
+            {
+                allBindings.Add(new KeyValuePair<Facette, BitArray>(f, v));
+            }
             
             public Binding Clone()
             {
-                Binding b = new Binding();
-                b.theFacette = theFacette;
-                b.valueSet = valueSet;
-                b.prev = prev;
-                if(next != null)
-                    b.next = next.Clone();
-                return b;
-            }
-            
-
-            public Binding Head()
-            {
-                if (prev != null)
-                    return prev.Head();
-                return this;
+                var bnd = new Binding();
+                bnd.allBindings.AddRange(allBindings);
+                return bnd;
             }
 
-            // Should yield true, if the binding cannot fulfill the constraint
-            // c.
+            // Should yield true, if the binding cannot fulfill the constraint,
+            // and should be dropped.
             public bool ViolatesConstraint(Constraint c)
             {
-                if(!c.IsActive(theFacette, valueSet))
+                bool isActive = false;
+                foreach(var b in allBindings)
                 {
-                    // the constraint does not apply to this concrete binding. Ask
-                    // next in list.
-                    if (next != null)
-                        return next.ViolatesConstraint(c);
-
-                    // we're at the end of the chain and nobody bothered yet - 
-                    // so we apparently don't violate the constraint.
-                    return false;
+                    if(c.IsActive(b.Key, b.Value))
+                    {
+                        isActive = true;
+                        break;
+                    }
                 }
 
-                // constraint is active, check if the constrained facette's valueset
-                // fullfills the constraint.
-                var head = Head();
-
-                return !head.IsValuesetLegal(c);                    
-            }
-
-            /// <summary>
-            /// Yields TRUE, if the valueset of this binding
-            /// and the matching facette is legel with resprect to
-            /// the given constraint.
-            /// </summary>
-            /// <param name="c"></param>
-            /// <returns></returns>
-            private bool IsValuesetLegal(Constraint c)
-            {
-                var valuesetIsLegal = c.ValueSetFullfillsConstraint(theFacette, theFacette.GetValues(valueSet));
-
-                if (!valuesetIsLegal)
+                if (!isActive)
                     return false;
 
-                if (next == null)
-                    return valuesetIsLegal;
+                var constrainedEntry = allBindings.FirstOrDefault(x => c.ConstrainsFacette(x.Key));
 
-                return next.IsValuesetLegal(c);
-            }
+                if (constrainedEntry.Key == null)
+                    return false;
+
+                return !c.ValueSetFullfillsConstraint(constrainedEntry.Key, constrainedEntry.Key.GetValues(constrainedEntry.Value));             
+            }           
 
             public override string ToString()
             {
                 var sb = new StringBuilder();
-                sb.AppendLine(theFacette.Name + " : " + theFacette.GetValues(valueSet).EntriesToString());
-
-                if (next != null)
-                    sb.AppendLine(next.ToString());
-
+                foreach(var f in allBindings)
+                {
+                    sb.AppendLine(f.Key.Name + " : " + f.Key.GetValues(f.Value).EntriesToString());
+                }
                 return sb.ToString();
+            }
+
+            internal void PushRange(Binding tailB)
+            {
+                allBindings.AddRange(tailB.allBindings);
             }
         }
 
@@ -149,8 +125,7 @@ namespace MutagenRuntime
             foreach(var v in vals)
             {
                 var binding = new Binding();
-                binding.valueSet = v;
-                binding.theFacette = head.owner;
+                binding.PushValueset(head.owner, v);
                 myBindings.Add(binding);         
             }
 
@@ -166,12 +141,9 @@ namespace MutagenRuntime
             {                
                 foreach (var tb in tailBindings)
                 {
-
-                    // Attention -> We might have an issue with clones of bindings here!
                     var newBinding = myB.Clone();
                     var tailB = tb.Clone();
-                    newBinding.next = tailB;
-                    tailB.prev = newBinding;
+                    newBinding.PushRange(tailB);
 
                     if (allConstraints.Any(x => newBinding.ViolatesConstraint(x)))
                         continue;

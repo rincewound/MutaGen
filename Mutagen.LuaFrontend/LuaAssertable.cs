@@ -36,7 +36,10 @@ namespace Mutagen.LuaFrontend
         public void __ASSERT(bool value)
         {
             if (!value)
+            {
                 logger.Error("Assert failed on __ASSERT " + (res.Count + 1));
+                //luaEnv.DoChunk("debug.traceback(\"Stack trace\")", null);
+            }
             res.Add(new AssertResult { result = value, info = "LuaAssert " + (res.Count + 1) });
         }
     }

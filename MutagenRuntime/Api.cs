@@ -150,26 +150,46 @@ namespace MutagenRuntime
         private static void ApplyBinding(TestEnvironment.Binding bnd)
         {
             var current = bnd;
-            do
+
+            foreach(var b in bnd.allBindings)
             {
-                var vals = current.theFacette.GetValues(current.valueSet);
-                logger.Info("Apply binding for facette " + current.theFacette.Name);
+                var vals = b.Key.GetValues(b.Value);
+                logger.Info("Apply binding for facette " + b.Key.Name);
                 logger.Info("Using values: " + vals.EntriesToString());
 
-                var bindingSetterFunction = "Apply" + current.theFacette.Name;
+                var bindingSetterFunction = "Apply" + b.Key.Name;
                 var theFunc = theHarness.GetType().GetMethod(bindingSetterFunction);
 
-                if(theFunc == null)
+                if (theFunc == null)
                 {
                     throw new NoFunctionInHarnessException(bindingSetterFunction);
                 }
 
-                theFunc.Invoke(theHarness, System.Reflection.BindingFlags.Default, null, 
-                               new object[] { vals}, 
+                theFunc.Invoke(theHarness, System.Reflection.BindingFlags.Default, null,
+                               new object[] { vals },
                                System.Globalization.CultureInfo.DefaultThreadCurrentCulture);
+            }
 
-                current = current.next;
-            } while (current != null);
+            //do
+            //{
+            //    var vals = current.theFacette.GetValues(current.valueSet);
+            //    logger.Info("Apply binding for facette " + current.theFacette.Name);
+            //    logger.Info("Using values: " + vals.EntriesToString());
+
+            //    var bindingSetterFunction = "Apply" + current.theFacette.Name;
+            //    var theFunc = theHarness.GetType().GetMethod(bindingSetterFunction);
+
+            //    if(theFunc == null)
+            //    {
+            //        throw new NoFunctionInHarnessException(bindingSetterFunction);
+            //    }
+
+            //    theFunc.Invoke(theHarness, System.Reflection.BindingFlags.Default, null, 
+            //                   new object[] { vals}, 
+            //                   System.Globalization.CultureInfo.DefaultThreadCurrentCulture);
+
+            //    current = current.next;
+            //} while (current != null);
         }
 
         // Dodgy naming, so that the TC code looks nicer, i.e.
