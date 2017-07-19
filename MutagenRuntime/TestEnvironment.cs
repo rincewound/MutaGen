@@ -32,19 +32,11 @@ namespace MutagenRuntime
         {
             public Facette theFacette;
             public BitArray valueSet;
-            public Binding next;
-            public Binding prev;
+            public Binding next { get;  set; }
+            public Binding prev { get;  set; }
 
             public Binding() { }
-
-            public Binding(Binding other, Binding next, Binding prev)
-            {
-                theFacette = other.theFacette;
-                valueSet = other.valueSet;
-                this.next = other.next;
-                this.prev = other.prev;
-            }
-
+            
             public Binding Clone()
             {
                 Binding b = new Binding();
@@ -55,6 +47,7 @@ namespace MutagenRuntime
                     b.next = next.Clone();
                 return b;
             }
+            
 
             public Binding Head()
             {
@@ -86,22 +79,23 @@ namespace MutagenRuntime
                 return !head.IsValuesetLegal(c);                    
             }
 
+            /// <summary>
+            /// Yields TRUE, if the valueset of this binding
+            /// and the matching facette is legel with resprect to
+            /// the given constraint.
+            /// </summary>
+            /// <param name="c"></param>
+            /// <returns></returns>
             private bool IsValuesetLegal(Constraint c)
             {
-                if (!c.ConstrainsFacette(theFacette))
-                {
-                    if (next == null)
-                    {
-                        return true;
-                    }
-                    return next.IsValuesetLegal(c);
-                }
-
                 var valuesetIsLegal = c.ValueSetFullfillsConstraint(theFacette, theFacette.GetValues(valueSet));
+
                 if (!valuesetIsLegal)
                     return false;
+
                 if (next == null)
                     return valuesetIsLegal;
+
                 return next.IsValuesetLegal(c);
             }
 
@@ -112,8 +106,8 @@ namespace MutagenRuntime
 
                 if (next != null)
                     sb.AppendLine(next.ToString());
-                return sb.ToString();
 
+                return sb.ToString();
             }
         }
 
@@ -172,9 +166,12 @@ namespace MutagenRuntime
             {                
                 foreach (var tb in tailBindings)
                 {
+
+                    // Attention -> We might have an issue with clones of bindings here!
                     var newBinding = myB.Clone();
-                    newBinding.next = tb.Clone();
-                    newBinding.next.prev = newBinding;
+                    var tailB = tb.Clone();
+                    newBinding.next = tailB;
+                    tailB.prev = newBinding;
 
                     if (allConstraints.Any(x => newBinding.ViolatesConstraint(x)))
                         continue;

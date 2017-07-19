@@ -186,23 +186,23 @@ namespace MutagenTests
         [Test]
         public void CreateBindings_HonorsConstraints_IsolatedBackwardConstraint()
         {
-            var f1 = new Facette("fnord1", new List<object> { 1, 2 });
-            var f2 = new Facette("fnord2", new List<object> { 4, 5 });
-            var f3 = new Facette("fnord3", new List<object> { 6, 7 });
+            var f1 = new Facette("Head", new List<object> { 1  });
+            var f2 = new Facette("Middle", new List<object> { 4  });
+            var f3 = new Facette("Tail", new List<object> { 6 });
 
             te.AddFacette(f1);
             te.AddFacette(f2);
             te.AddFacette(f3);
-            te.AddConstraint(new Constraint(f3, f1, x => true, new List<object> { 2 }));
+            te.AddConstraint(new Constraint(f3, f1, x => true, new List<object> {  }));
 
             var testContext = new MutagenRuntime.TestContext();
-            testContext.AddFacette("fnord1", 1, 1);
-            testContext.AddFacette("fnord2", 1, 1);
-            testContext.AddFacette("fnord3", 1, 1);
+            testContext.AddFacette("Head", 1, 1);
+            testContext.AddFacette("Middle", 1, 1);
+            testContext.AddFacette("Tail", 1, 1);
 
             var theBinding = te.CreateBindings(testContext);
 
-            Assert.AreEqual(4, theBinding.Count);
+            Assert.AreEqual(0, theBinding.Count);
         }
     }
 }
