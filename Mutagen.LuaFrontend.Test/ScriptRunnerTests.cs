@@ -18,6 +18,7 @@ namespace Mutagen.LuaFrontend.Test
         Lua lua;
         ScriptRunner runner;
 
+
         [SetUp]
         public void Setup()
         {
@@ -26,7 +27,8 @@ namespace Mutagen.LuaFrontend.Test
            apiBridge = Mock.Interface<IApiBridge>();
            IOC.Register<IApiBridge>(() => apiBridge);
            IOC.Register<Lua>(() => lua);
-           IOC.Register<ApiAdapter>(() => new ApiAdapter());           
+           IOC.Register<ApiAdapter>(() => new ApiAdapter());
+           IOC.Register<LuaGlobalPortable>(() => lua.CreateEnvironment());
         }
 
         [Test]
@@ -65,6 +67,7 @@ namespace Mutagen.LuaFrontend.Test
             IOC.Register<ITestEnvironment>(() => new TestEnvironment());
             IOC.Register<ITestContext>(() => new MutagenRuntime.TestContext());
             IOC.Register<Lua>(() => lua);
+            IOC.Register<LuaGlobalPortable>(() => lua.CreateEnvironment());
             IOC.Register<ApiAdapter>(() => new ApiAdapter());
 
 

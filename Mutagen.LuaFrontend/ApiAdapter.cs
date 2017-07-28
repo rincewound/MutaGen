@@ -14,7 +14,8 @@ namespace Mutagen.LuaFrontend
         [MuImport]
         IApiBridge bridge;
 
-        public LuaGlobalPortable LuaEnv { get; set; }
+        [MuImport]
+        public LuaGlobalPortable LuaEnv;
 
         public void CreateFacette(string facetteName, LuaTable values)
         {

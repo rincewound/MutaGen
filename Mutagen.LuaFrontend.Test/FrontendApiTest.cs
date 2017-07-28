@@ -26,8 +26,9 @@ namespace Mutagen.LuaFrontend.Test
             apiBridge = Mock.Interface<IApiBridge>();
             IOC.Register<IApiBridge>( () => apiBridge);
             IOC.Register<ApiAdapter>( () => new ApiAdapter());
+            IOC.Register<LuaGlobalPortable>(() => luaEnv);
             api = IOC.Resolve<ApiAdapter>();
-            api.LuaEnv = luaEnv;
+            //api.LuaEnv = luaEnv;
         }
 
         private void ReadScript(string path)
@@ -97,7 +98,7 @@ namespace Mutagen.LuaFrontend.Test
         {
             Expect.Once.MethodCall(() => apiBridge.CommitTestCaseCode(Any<IAssertable>.Value.Matching(x => x != null).AsInterface));
 
-            api.LuaEnv = luaEnv;
+            //api.LuaEnv = luaEnv;
             ReadScript("./LuaScripts/EndTestCase.lua");            
             LuaUtil.PublishObjectMethods(api, luaEnv);
             luaEnv.DoChunk(scriptChunk);
@@ -111,7 +112,7 @@ namespace Mutagen.LuaFrontend.Test
             Expect.Once.MethodCall(() => apiBridge.CreateFacette("F01", Any<System.Collections.Generic.List<object>>.Value));
             Expect.Once.MethodCall(() => apiBridge.CreateFacette("F02", Any<System.Collections.Generic.List<object>>.Value));
             //Expect.Once.MethodCall(() => apiBridge.CreateConstraint("F01", "F02", "F01Constraint", Any<System.Collections.Generic.List<object>>.Value);
-            api.LuaEnv = luaEnv;
+            //api.LuaEnv = luaEnv;
             ReadScript("./LuaScripts/AddConstraint.lua");
             LuaUtil.PublishObjectMethods(api, luaEnv);
             luaEnv.DoChunk(scriptChunk);
