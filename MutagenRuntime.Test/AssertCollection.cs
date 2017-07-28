@@ -18,9 +18,7 @@ namespace MutagenTests
         {
             theCollection = new AssertCollection();
         }
-
-        private MutagenRuntime.TestContext testContextInstance;
-
+       
         [Test]
         public void EmptyCollection_ThrowsOnExecute()
         {

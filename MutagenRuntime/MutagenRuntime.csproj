@@ -61,6 +61,7 @@
     <Compile Include="Facette\Facette.cs" />
     <Compile Include="Assert\IAssertable.cs" />
     <Compile Include="Facette\ListToStringHelper.cs" />
+    <Compile Include="Exception\NoConstraintGuardException.cs" />
     <Compile Include="ITestContext.cs" />
     <Compile Include="ITestEnvironment.cs" />
     <Compile Include="ITestHarness.cs" />

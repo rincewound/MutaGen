@@ -104,5 +104,23 @@ namespace Mutagen.LuaFrontend.Test
 
             AssertInvocationsWasMade.MatchingExpectationsFor(apiBridge);            
         }
+
+        [Test]
+        public void CallTo_CreateConstraint_CallsApi()
+        {
+            Expect.Once.MethodCall(() => apiBridge.CreateFacette("F01", Any<System.Collections.Generic.List<object>>.Value));
+            Expect.Once.MethodCall(() => apiBridge.CreateFacette("F02", Any<System.Collections.Generic.List<object>>.Value));
+            //Expect.Once.MethodCall(() => apiBridge.CreateConstraint("F01", "F02", "F01Constraint", Any<System.Collections.Generic.List<object>>.Value);
+            api.LuaEnv = luaEnv;
+            ReadScript("./LuaScripts/AddConstraint.lua");
+            LuaUtil.PublishObjectMethods(api, luaEnv);
+            luaEnv.DoChunk(scriptChunk);
+
+            AssertInvocationsWasMade.MatchingExpectationsFor(apiBridge);
+
+
+            Assert.Fail("Test does not check call to api.CreateConstraint!");
+
+        }
     }
 }

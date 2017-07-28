@@ -36,5 +36,22 @@ namespace MTest
             Assert.IsTrue(c.IsActive(F1, val));
         }
 
+        [Test]
+        public void CannotCreateConstraint_if_Guard_Is_Null()
+        {
+            var f1 = new Facette("Head", new List<object> { 1, 2, 3, 4, 5, 6 });
+            var f2 = new Facette("Middle", new List<object> { 4, 5, 6, 7 });
+
+            try
+            {
+                var c = new Constraint(f1, f2, null, new List<object> { 4 });
+                Assert.Fail("Constraint Ctor did not throw, for guard==null");
+            }
+            catch (NoConstraintGuardException)
+            {
+
+            }
+        }
+
     }
 }

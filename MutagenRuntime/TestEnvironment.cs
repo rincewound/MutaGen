@@ -95,6 +95,13 @@ namespace MutagenRuntime
 
         public virtual void AddConstraint(Constraint c)
         {
+            if (!allFacettes.ContainsKey(c.constraintSource.Name))
+                throw new NoConstraintGuardException();
+
+            if (!allFacettes.ContainsKey(c.constraintTarget.Name))
+                throw new NoConstraintGuardException();
+
+
             allConstraints.Add(c);
         }
 
@@ -102,7 +109,7 @@ namespace MutagenRuntime
         {
             Facette fac;
             if (!allFacettes.TryGetValue(facetteName, out fac))
-                throw new NoSuchFacetteException();
+                throw new NoConstraintGuardException();
 
             return fac;
         }

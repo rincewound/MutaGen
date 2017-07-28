@@ -291,5 +291,23 @@ namespace MutagenTests
             Assert.AreEqual(6, res.Count);
         }
 
+        [Test]
+        public void Api_CreateConstraint_CallsTestEnv()
+        {
+            var theContext = A.Fake<ITestContext>();
+            IOC.Reset();
+            IOC.Register<ITestEnvironment>(() => fakeTev);
+            IOC.Register<ITestContext>(() => theContext);
+
+            A.CallTo(() => fakeTev.GetFacette(A<string>.Ignored)).Returns(null);
+
+            Api.Init();
+            Api.CreateFacette("F01", new List<object> { 1 });
+            Api.CreateConstraint("F01", "F02", x=>true, null);
+            A.CallTo(() => fakeTev.AddConstraint(A<Constraint>.Ignored)).MustHaveHappened();
+        }
+
+
+        
     }
 }

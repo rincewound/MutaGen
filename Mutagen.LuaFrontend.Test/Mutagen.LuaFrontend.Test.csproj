@@ -74,6 +74,9 @@
     <Compile Include="SimpleHarness.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="LuaScripts\AddConstraint.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="LuaScripts\Assertable_CallOtherObject.lua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

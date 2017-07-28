@@ -64,5 +64,10 @@ namespace Mutagen.LuaFrontend
         {
             return Api.Testharness();
         }    
+
+        public void CreateConstraint(string constraintSource, string constraintTarget, string guard, LuaTable constraintValues)
+        {
+
+        }
     }
 }

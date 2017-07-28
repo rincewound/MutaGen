@@ -33,7 +33,7 @@ namespace MutagenTests
                 te.GetFacette("notcreated");
                 Assert.Fail("did not throw!");
             }
-            catch (MutagenRuntime.NoSuchFacetteException)
+            catch (MutagenRuntime.NoConstraintGuardException)
             {
 
             }
@@ -227,6 +227,51 @@ namespace MutagenTests
             var theBinding = te.CreateBindings(testContext);
 
             Assert.AreEqual(1, theBinding.Count);
+        }
+
+        //this hsould be part of the testenv test!
+        [Test]
+        public void CannotAddConstraint_if_ConstraintSource_Is_Not_Part_Of_Env()
+        {
+            var f1 = new Facette("Head", new List<object> { 1, 2, 3, 4, 5, 6 });
+            var f2 = new Facette("Middle", new List<object> { 4, 5, 6, 7 });
+            //var f3 = new Facette("Tail", new List<object> { 6 });
+
+            //te.AddFacette(f1);
+            te.AddFacette(f2);
+            //te.AddFacette(f3);
+
+            try
+            {
+                te.AddConstraint(new Constraint(f1, f2, x => true, new List<object> { 4 }));
+                Assert.Fail("AddConstraint did not throw, for constraintsource that is not part of the testenv");
+            }
+            catch (NoConstraintGuardException)
+            {
+
+            }            
+        }
+
+        [Test]
+        public void CannotCreateConstraint_if_ConstraintTarget_Is_Not_Part_Of_Env()
+        {
+            var f1 = new Facette("Head", new List<object> { 1, 2, 3, 4, 5, 6 });
+            var f2 = new Facette("Middle", new List<object> { 4, 5, 6, 7 });
+            //var f3 = new Facette("Tail", new List<object> { 6 });
+
+            te.AddFacette(f1);
+            //te.AddFacette(f2);
+            //te.AddFacette(f3);
+
+            try
+            {
+                te.AddConstraint(new Constraint(f1, f2, x => true, new List<object> { 4 }));
+                Assert.Fail("AddConstraint did not throw, for constrainttarget that is not part of the testenv");
+            }
+            catch (NoConstraintGuardException)
+            {
+
+            }
         }
     }
 }

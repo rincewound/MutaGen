@@ -12,12 +12,21 @@ namespace MutagenRuntime
         public delegate bool ConstraintGuard(List<object> activeValues);
 
         ConstraintGuard guard;
-        Facette constraintSource;
-        Facette constraintTarget;
+        public Facette constraintSource { get; private set; }
+        public Facette constraintTarget { get; private set; }
         List<object> valuesToConstrainTo;
 
         public Constraint(Facette constraintSource,Facette constraintTarget, ConstraintGuard guard, List<object> valuesToConstrainTo)
         {
+            if (guard == null)
+                throw new NoConstraintGuardException();
+
+            if (constraintSource == null)
+                throw new NoSuchFacetteException();
+
+            if (constraintTarget == null)
+                throw new NoSuchFacetteException();
+
             this.guard = guard;
             this.constraintSource = constraintSource;
             this.valuesToConstrainTo = valuesToConstrainTo;

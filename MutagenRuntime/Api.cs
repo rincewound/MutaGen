@@ -203,5 +203,12 @@ namespace MutagenRuntime
         {
             return testResults;
         }
+
+        public static void CreateConstraint(string constraintSource, string constraintTarget, Constraint.ConstraintGuard guard, List<object> constraintValues)
+        {
+            var c = new Constraint(te.GetFacette(constraintSource), te.GetFacette(constraintTarget), guard, constraintValues);
+
+            te.AddConstraint(c);
+        }
     }
 }
